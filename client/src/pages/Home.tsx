@@ -26,6 +26,8 @@ export default function Home() {
   const [n, setN] = useState<number>(36);
   const [isRunning, setIsRunning] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
+  const [animationStartTime, setAnimationStartTime] = useState<number>(0);
+  const [simulatedTime, setSimulatedTime] = useState<number>(0);
   const [selectedAlgorithm, setSelectedAlgorithm] = useState<"brute" | "linear" | "sqrt">("sqrt");
   const [results, setResults] = useState<Record<string, AlgorithmResult>>({});
 
@@ -136,14 +138,50 @@ export default function Home() {
     }
   }, [isRunning, currentStep, selectedAlgorithm, results]);
 
+  // Update simulated time based on animation progress
+  useEffect(() => {
+    if (isRunning && results[selectedAlgorithm] && animationStartTime > 0) {
+      const interval = setInterval(() => {
+        const elapsed = performance.now() - animationStartTime;
+        const progress = currentStep / results[selectedAlgorithm].steps.length;
+        
+        // Scale factor based on algorithm complexity (exaggerated for illustration)
+        const scaleFactor = {
+          brute: 1000,    // Slowest
+          linear: 100,    // Medium
+          sqrt: 10        // Fastest
+        }[selectedAlgorithm] || 1;
+        
+        // Simulated time = progress * total_operations * scale_factor / 1000
+        const simTime = progress * results[selectedAlgorithm].operations * scaleFactor / 1000;
+        setSimulatedTime(simTime);
+      }, 50);
+      
+      return () => clearInterval(interval);
+    } else if (!isRunning) {
+      // Show final time when animation completes
+      if (results[selectedAlgorithm]) {
+        const scaleFactor = {
+          brute: 1000,
+          linear: 100,
+          sqrt: 10
+        }[selectedAlgorithm] || 1;
+        setSimulatedTime(results[selectedAlgorithm].operations * scaleFactor / 1000);
+      }
+    }
+  }, [isRunning, currentStep, selectedAlgorithm, results, animationStartTime]);
+
   const handleRun = () => {
     setCurrentStep(0);
+    setAnimationStartTime(performance.now());
     setIsRunning(true);
   };
 
   const handleReset = () => {
     setIsRunning(false);
     setCurrentStep(0);
+    setAnimationStartTime(0);
+    setSimulatedTime(0);
   };
 
   const visibleSteps = useMemo(() => {
@@ -383,8 +421,12 @@ export default function Home() {
                         <div className="text-lg font-bold">{result.operations.toLocaleString()}</div>
                       </div>
                       <div>
-                        <div className="text-muted-foreground">Time</div>
-                        <div className="text-lg font-bold">{result.time.toFixed(3)}ms</div>
+                        <div className="text-muted-foreground">Simulated Time</div>
+                        <div className="text-lg font-bold">
+                          {selectedAlgorithm === algo && (isRunning || currentStep > 0)
+                            ? `${simulatedTime.toFixed(1)}ms`
+                            : '0.0ms'}
+                        </div>
                       </div>
                       <div>
                         <div className="text-muted-foreground">Pairs Found</div>
