@@ -104,7 +104,7 @@ This means that for every factor we find *below* the square root, we automatical
 
 The algorithm leverages this insight by only looping from 1 up to `int(√n)`. For each `i` that is a factor, it stores both `(i, n/i)` and `(n/i, i)`. A special check is needed for perfect squares to avoid adding the same pair twice (e.g., for n=36, `i=6`, `n/i=6`, so we only add `(6,6)` once).
 
-![O(√n) Algorithm Flowchart](diagrams/sqrt_algorithm_flow.mmd)
+![O(√n) Algorithm Flowchart](diagrams/sqrt_algorithm_flow.png)
 *Figure 5: The logical flow of the O(√n) algorithm, showing the loop, the divisibility check, and the handling for perfect squares.*
 
 ### The Code (O(√n))
