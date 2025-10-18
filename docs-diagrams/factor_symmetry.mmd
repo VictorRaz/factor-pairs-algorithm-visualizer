@@ -1,0 +1,32 @@
+graph TD
+    subgraph "Factor Pairs for n = 36"
+        A["√36 = 6<br/>The Dividing Line"]
+        
+        B1["1 × 36 = 36"]
+        B2["2 × 18 = 36"]
+        B3["3 × 12 = 36"]
+        B4["4 × 9 = 36"]
+        B5["6 × 6 = 36"]
+        
+        C1["Small Factor: 1<br/>Large Factor: 36"]
+        C2["Small Factor: 2<br/>Large Factor: 18"]
+        C3["Small Factor: 3<br/>Large Factor: 12"]
+        C4["Small Factor: 4<br/>Large Factor: 9"]
+        C5["Perfect Square:<br/>6 × 6"]
+        
+        B1 --> C1
+        B2 --> C2
+        B3 --> C3
+        B4 --> C4
+        B5 --> C5
+        
+        A -.->|"All factors ≤ 6"| C5
+    end
+    
+    style A fill:#ff9999,stroke:#cc0000,stroke-width:3px
+    style C5 fill:#99ff99,stroke:#00cc00,stroke-width:2px
+    style C1 fill:#ccccff,stroke:#0000cc,stroke-width:2px
+    style C2 fill:#ccccff,stroke:#0000cc,stroke-width:2px
+    style C3 fill:#ccccff,stroke:#0000cc,stroke-width:2px
+    style C4 fill:#ccccff,stroke:#0000cc,stroke-width:2px
+

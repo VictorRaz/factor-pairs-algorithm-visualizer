@@ -1,0 +1,31 @@
+graph TD
+    Start["Problem: Find all factor pairs of n"]
+    
+    Start --> Brute["Solution 1: Brute Force<br/>O(n²)"]
+    Start --> Linear["Solution 2: Single Loop<br/>O(n)"]
+    Start --> Optimal["Solution 3: Optimized<br/>O(√n)"]
+    
+    Brute --> B1["Check EVERY pair<br/>(i, j) from 1 to n"]
+    B1 --> B2["Test: i × j = n?"]
+    B2 --> B3["Operations: n²"]
+    B3 --> B4["Example n=1000:<br/>1,000,000 checks"]
+    
+    Linear --> L1["Check EACH number i<br/>from 1 to n"]
+    L1 --> L2["Test: n % i = 0?<br/>Calculate j = n / i"]
+    L2 --> L3["Operations: n"]
+    L3 --> L4["Example n=1000:<br/>1,000 checks"]
+    
+    Optimal --> O1["Check numbers i<br/>from 1 to √n"]
+    O1 --> O2["Test: n % i = 0?<br/>Store both (i, j) and (j, i)"]
+    O2 --> O3["Operations: √n"]
+    O3 --> O4["Example n=1000:<br/>32 checks"]
+    
+    B4 --> Result["All produce same output<br/>but at vastly different speeds"]
+    L4 --> Result
+    O4 --> Result
+    
+    style Brute fill:#ffcccc,stroke:#cc0000,stroke-width:2px
+    style Linear fill:#ffffcc,stroke:#cccc00,stroke-width:2px
+    style Optimal fill:#ccffcc,stroke:#00cc00,stroke-width:3px
+    style Result fill:#e6e6ff,stroke:#0000cc,stroke-width:2px
+

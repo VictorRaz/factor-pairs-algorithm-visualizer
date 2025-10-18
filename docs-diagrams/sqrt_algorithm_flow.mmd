@@ -1,0 +1,37 @@
+flowchart TD
+    Start([Start: Input n])
+    Init["Initialize empty pairs list<br/>Calculate √n"]
+    Loop["For i = 1 to √n"]
+    Check{"Does n % i = 0?<br/>(Is i a factor?)"}
+    CalcJ["Calculate j = n / i"]
+    CheckSquare{"Is i = j?<br/>(Perfect square?)"}
+    AddOne["Add pair (i, j) only"]
+    AddTwo["Add both pairs:<br/>(i, j) and (j, i)"]
+    Continue["Continue to next i"]
+    Sort["Sort all pairs"]
+    Output["Print pairs in order"]
+    End([End])
+    
+    Start --> Init
+    Init --> Loop
+    Loop --> Check
+    Check -->|Yes| CalcJ
+    Check -->|No| Continue
+    CalcJ --> CheckSquare
+    CheckSquare -->|Yes| AddOne
+    CheckSquare -->|No| AddTwo
+    AddOne --> Continue
+    AddTwo --> Continue
+    Continue --> Loop
+    Loop -->|Done| Sort
+    Sort --> Output
+    Output --> End
+    
+    style Start fill:#e1f5ff,stroke:#01579b,stroke-width:2px
+    style End fill:#e1f5ff,stroke:#01579b,stroke-width:2px
+    style Check fill:#fff9c4,stroke:#f57f17,stroke-width:2px
+    style CheckSquare fill:#fff9c4,stroke:#f57f17,stroke-width:2px
+    style AddOne fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px
+    style AddTwo fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px
+    style Sort fill:#f8bbd0,stroke:#c2185b,stroke-width:2px
+
