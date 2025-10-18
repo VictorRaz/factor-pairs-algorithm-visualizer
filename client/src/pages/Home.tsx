@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Slider } from "@/components/ui/slider";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { Moon, Sun, Play, RotateCcw } from "lucide-react";
+import { Moon, Sun, Play, RotateCcw, Square } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 
 interface AlgorithmStep {
@@ -177,6 +177,10 @@ export default function Home() {
     setIsRunning(true);
   };
 
+  const handleStop = () => {
+    setIsRunning(false);
+  };
+
   const handleReset = () => {
     setIsRunning(false);
     setCurrentStep(0);
@@ -311,10 +315,17 @@ export default function Home() {
 
               {/* Control Buttons */}
               <div className="flex gap-2">
-                <Button onClick={handleRun} disabled={isRunning} className="flex-1">
-                  <Play className="mr-2 h-4 w-4" />
-                  Run Animation
-                </Button>
+                {!isRunning ? (
+                  <Button onClick={handleRun} className="flex-1">
+                    <Play className="mr-2 h-4 w-4" />
+                    Run Animation
+                  </Button>
+                ) : (
+                  <Button onClick={handleStop} variant="destructive" className="flex-1">
+                    <Square className="mr-2 h-4 w-4" />
+                    Stop
+                  </Button>
+                )}
                 <Button onClick={handleReset} variant="outline" disabled={isRunning}>
                   <RotateCcw className="mr-2 h-4 w-4" />
                   Reset
